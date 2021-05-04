@@ -17,8 +17,8 @@ async function run() {
         hp INTEGER NOT NULL,
         ac INTEGER NOT NULL,
         cr FLOAT NOT NULL,
-        is_legendary BOOLEAN DEFAULT FALSE
-        img_url VARCHAR(1024) NOT NULL,
+        is_legendary BOOLEAN DEFAULT FALSE,
+        img_url VARCHAR(1024) NOT NULL
       );
     `);
 
