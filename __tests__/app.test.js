@@ -15,102 +15,102 @@ describe('API Routes', () => {
     return client.end();
   });
 
-  const expectedCats = [
+  const expectedMonsters = [
     {
-      id: expect.any(Number),
-      name: 'Felix',
-      type: 'Tuxedo',
-      url: 'cats/felix.png',
-      year: 1892,
-      lives: 3,
-      isSidekick: false
+      name: 'Aboleth',
+      type: 'aberration',
+      hp: 135,
+      AC: 17,
+      cr: 10,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/11/1000/1000/636238825975375671.jpeg'
     },
     {
-      id: expect.any(Number),
-      name: 'Garfield',
-      type: 'Orange Tabby',
-      url: 'cats/garfield.jpeg',
-      year: 1978,
-      lives: 7,
-      isSidekick: false
+      name: 'Acolyte',
+      type: 'aberration',
+      hp: 9,
+      AC: 10,
+      cr: .25,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/attachments/2/656/humanoid.jpg'
     },
     {
-      id: expect.any(Number),
-      name: 'Duchess',
-      type: 'Angora',
-      url: 'cats/duchess.jpeg',
-      year: 1970,
-      lives: 9,
-      isSidekick: false
+      name: 'Adult Black Dragon',
+      type: 'dragon',
+      hp: 195,
+      AC: 19,
+      cr: 14,
+      isLegendary: true,
+      img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/13/1000/1000/636238871029832086.jpeg'
     },
     {
-      id: expect.any(Number),
-      name: 'Stimpy',
-      type: 'Manx',
-      url: 'cats/stimpy.jpeg',
-      year: 1990,
-      lives: 1,
-      isSidekick: true
+      name: 'Allosaurus',
+      type: 'large beast',
+      hp: 51,
+      AC: 13,
+      cr: 2,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/attachments/2/648/beast.jpg'
     },
     {
-      id: expect.any(Number),
-      name: 'Sylvester',
-      type: 'Tuxedo',
-      url: 'cats/sylvester.jpeg',
-      year: 1945,
-      lives: 1,
-      isSidekick: true
+      name: 'Ancient Black Dragon',
+      type: 'dragon',
+      hp: 367,
+      AC: 22,
+      cr: 21,
+      isLegendary: true,
+      img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/129/315/315/636252755854649337.jpeg'
     },
     {
-      id: expect.any(Number),
-      name: 'Tigger',
-      type: 'Orange Tabby',
-      url: 'cats/tigger.jpeg',
-      year: 1928,
-      lives: 8,
-      isSidekick: false
+      name: 'Basilisk',
+      type: 'monstrosity',
+      hp: 52,
+      AC: 15,
+      cr: 3,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/185/1000/1000/636252762168821795.jpeg'
     },
     {
-      id: expect.any(Number),
-      name: 'Hello Kitty',
-      type: 'Angora',
-      url: 'cats/hello-kitty.jpeg',
-      year: 1974,
-      lives: 9,
-      isSidekick: false
+      name: 'Berserker',
+      type: 'humanoid',
+      hp: 67,
+      AC: 13,
+      cr: 2,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/attachments/2/656/humanoid.jpg'
     },
     {
-      id: expect.any(Number),
-      name: 'Hobbs',
-      type: 'Orange Tabby',
-      url: 'cats/hobbs.jpeg',
-      year: 1985,
-      lives: 6,
-      isSidekick: true
+      name: 'Chimera',
+      type: 'monstrosity',
+      hp: 114,
+      AC: 14,
+      cr: 6,
+      isLegendary: false,
+      img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/237/1000/1000/636252766770156389.jpeg'
     }
   ];
 
   // If a GET request is made to /api/cats, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data?
-  it('GET /api/cats', async () => {
+  it('GET /api/monsters', async () => {
     // act - make the request
-    const response = await request.get('/api/cats');
+    const response = await request.get('/api/monsters');
 
     // was response OK (200)?
     expect(response.status).toBe(200);
 
     // did it return the data we expected?
-    expect(response.body).toEqual(expectedCats);
+    expect(response.body).toEqual(expectedMonsters);
 
   });
 
   // If a GET request is made to /api/cats/:id, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data for the cat with that id?
-  test('GET /api/cats/:id', async () => {
-    const response = await request.get('/api/cats/2');
+  test('GET /api/monsters/:id', async () => {
+    const response = await request.get('/api/monsters/2');
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(expectedCats[1]);
+    expect(response.body).toEqual(expectedMonsters[1]);
   });
 });

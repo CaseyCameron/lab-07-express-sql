@@ -12,10 +12,10 @@ async function run() {
     await Promise.all(
       monsters.map(monster => {
         return client.query(`
-          INSERT INTO monsters (name, type, hp, ac, cr, is_legendary, img_url)
+          INSERT INTO monsters (name, type, hp, AC, cr, is_legendary, img_url)
           VALUES ($1, $2, $3, $4, $5, $6, $7);
         `,
-        [monster.name, monster.type, monster.hp, monster.ac, monster.cr, monster.isLegendary, monster.imgUrl]);
+        [monster.name, monster.type, monster.hp, monster.ac, monster.cr, monster.isLegendary, monster.img_url]);
       })
     );
     
