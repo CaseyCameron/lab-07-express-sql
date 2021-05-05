@@ -69,37 +69,37 @@ describe('API Routes', () => {
         .put(`/api/monsters/${aboleth.id}`)
         .send(aboleth);
 
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(aboleth);
-      });
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(aboleth);
+    });
+    
+    it('GET list of monsters form /api/monsters', async () => {
+      const r1 = await request.post('/api/monsters').send(berserker);
+      berserker = r1.body;
+      const r2 = await request.post('/api/monsters').send(chimera);
+      chimera = r2.body;
       
-      it('GET list of monsters form /api/monsters', async () => {
-        const r1 = await request.post('/api/monsters').send(berserker);
-        berserker = r1.body;
-        const r2 = await request.post('/api/monsters').send(chimera);
-        chimera = r2.body;
-        
-        const response = await request.get('/api/monsters');
-        
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(expect.arrayContaining([aboleth, berserker, chimera]));
-      })
+      const response = await request.get('/api/monsters');
       
-      it('GET chimera from /api/monsters', async () => {
-        const response = await request.get(`/api/monsters/${chimera.id}`);
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(chimera);
-      })
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.arrayContaining([aboleth, berserker, chimera]));
+    });
+    
+    it('GET chimera from /api/monsters', async () => {
+      const response = await request.get(`/api/monsters/${chimera.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(chimera);
+    });
+    
+    it('DELETE chimera from /api/monsters', async () => {
+      const response = await request.delete(`/api/monsters/${chimera.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(chimera);
       
-      it('DELETE chimera from /api/monsters', async () => {
-        const response = await request.delete(`/api/monsters/${chimera.id}`);
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(chimera);
-        
-        const getResponse = await request.get('/api/monsters');
-        expect(response.status).toBe(200);
-        expect(getResponse.body).toEqual(expect.arrayContaining([aboleth, berserker]));
-      })
+      const getResponse = await request.get('/api/monsters');
+      expect(response.status).toBe(200);
+      expect(getResponse.body).toEqual(expect.arrayContaining([aboleth, berserker]));
+    });
 
   });
 });
