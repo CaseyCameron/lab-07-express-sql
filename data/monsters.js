@@ -10,7 +10,7 @@ const monsters = [
     img_url: 'https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/11/1000/1000/636238825975375671.jpeg'
   },
   {
-    name: 'acolyte',
+    name: 'Acolyte',
     type: 'aberration',
     hp: 9,
     ac: 10,
