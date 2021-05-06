@@ -12,9 +12,21 @@ describe('API Routes', () => {
   });
 
   describe('/api/monsters', () => {
+    let user;
 
-    beforeAll(() => {
+    beforeAll(async () => {
       execSync('npm run recreate-tables');
+
+      const response = await request
+        .post('/api/auth/signup')
+        .send({
+          name: 'Me the User',
+          email: 'me@user.com',
+          passwordHash: 'password'
+        });
+
+        expect(response.status).toBe(200);
+        user = response.body;
     });
     
     let aboleth = {
@@ -61,7 +73,7 @@ describe('API Routes', () => {
       aboleth = response.body;
     });
 
-    it('PUT updated aboleth into /api/monsters/:id', async () => {
+    it.skip('PUT updated aboleth into /api/monsters/:id', async () => {
       aboleth.ac = 30;
       aboleth.type = 'badass';
 
@@ -73,7 +85,7 @@ describe('API Routes', () => {
       expect(response.body).toEqual(aboleth);
     });
     
-    it('GET list of monsters form /api/monsters', async () => {
+    it.skip('GET list of monsters form /api/monsters', async () => {
       const r1 = await request.post('/api/monsters').send(berserker);
       berserker = r1.body;
       const r2 = await request.post('/api/monsters').send(chimera);
@@ -85,13 +97,13 @@ describe('API Routes', () => {
       expect(response.body).toEqual(expect.arrayContaining([aboleth, berserker, chimera]));
     });
     
-    it('GET chimera from /api/monsters', async () => {
+    it.skip('GET chimera from /api/monsters', async () => {
       const response = await request.get(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);
     });
     
-    it('DELETE chimera from /api/monsters', async () => {
+    it.skip('DELETE chimera from /api/monsters', async () => {
       const response = await request.delete(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);
