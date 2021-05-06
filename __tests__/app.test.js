@@ -109,20 +109,20 @@ describe('API Routes', () => {
       expect(response.body).toEqual(expect.arrayContaining(expected));
     });
     
-    it.skip('GET chimera from /api/monsters', async () => {
+    it('GET chimera from /api/monsters/:id', async () => {
       const response = await request.get(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(chimera);
+      expect(response.body).toEqual({ ...chimera, userName: user.name });
     });
     
-    it.skip('DELETE chimera from /api/monsters', async () => {
+    it('DELETE chimera from /api/monsters', async () => {
       const response = await request.delete(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);
       
       const getResponse = await request.get('/api/monsters');
       expect(response.status).toBe(200);
-      expect(getResponse.body).toEqual(expect.arrayContaining([aboleth, berserker]));
+      expect(getResponse.body.find(monster => monster.id ===chimera.id)).toBeUndefined();
     });
 
   });
