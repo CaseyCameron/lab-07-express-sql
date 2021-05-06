@@ -74,7 +74,7 @@ describe('API Routes', () => {
       aboleth = response.body;
     });
 
-    it.skip('PUT updated aboleth into /api/monsters/:id', async () => {
+    it('PUT updated aboleth into /api/monsters/:id', async () => {
       aboleth.ac = 30;
       aboleth.type = 'badass';
 
@@ -86,16 +86,27 @@ describe('API Routes', () => {
       expect(response.body).toEqual(aboleth);
     });
     
-    it.skip('GET list of monsters form /api/monsters', async () => {
+    it('GET list of monsters form /api/monsters', async () => {
+      berserker.userId = user.id;
       const r1 = await request.post('/api/monsters').send(berserker);
       berserker = r1.body;
+
+      chimera.userId = user.id;
       const r2 = await request.post('/api/monsters').send(chimera);
       chimera = r2.body;
       
       const response = await request.get('/api/monsters');
       
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.arrayContaining([aboleth, berserker, chimera]));
+
+      const expected = [aboleth, berserker, chimera].map(monster => {
+        return {
+          userName: user.name,
+          ...monster
+        };
+      });
+
+      expect(response.body).toEqual(expect.arrayContaining(expected));
     });
     
     it.skip('GET chimera from /api/monsters', async () => {
