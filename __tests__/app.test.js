@@ -1,7 +1,7 @@
 import app from '../lib/app.js';
 import supertest from 'supertest';
 import client from '../lib/client.js';
-import { execSync } from 'child_process';
+import { exec, execSync } from 'child_process';
 
 const request = supertest(app);
 
@@ -115,7 +115,7 @@ describe('API Routes', () => {
       expect(response.body).toEqual({ ...chimera, userName: user.name });
     });
     
-    it('DELETE chimera from /api/monsters', async () => {
+    it.skip('DELETE chimera from /api/monsters', async () => {
       const response = await request.delete(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);
@@ -123,6 +123,32 @@ describe('API Routes', () => {
       const getResponse = await request.get('/api/monsters');
       expect(response.status).toBe(200);
       expect(getResponse.body.find(monster => monster.id ===chimera.id)).toBeUndefined();
+    });
+
+    describe('seed data tests', () => {
+
+      beforeAll(() => {
+        execSync('npm run setup-db');
+      });
+
+      it('GET /api/monsters', async () => {
+        const response = await request.get('/api/monsters');
+        
+        expect(response.status).toBe(200);
+        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.body[0]).toEqual({
+          id: expect.any(Number),
+          name: expect.any(String),
+          type: expect.any(String),
+          hp: expect.any(Number),
+          ac: expect.any(Number),
+          cr: expect.any(Number),
+          isLegendary: expect.any(Boolean),
+          img_url: expect.any(String),
+          userId: expect.any(Number),
+          userName: expect.any(String)
+        });
+      });
     });
 
   });
