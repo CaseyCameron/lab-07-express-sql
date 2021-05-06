@@ -1,7 +1,7 @@
 import app from '../lib/app.js';
 import supertest from 'supertest';
 import client from '../lib/client.js';
-import { exec, execSync } from 'child_process';
+import { execSync } from 'child_process';
 
 const request = supertest(app);
 
@@ -25,8 +25,8 @@ describe('API Routes', () => {
           passwordHash: 'password'
         });
 
-        expect(response.status).toBe(200);
-        user = response.body;
+      expect(response.status).toBe(200);
+      user = response.body;
     });
     
     let aboleth = {
@@ -122,7 +122,7 @@ describe('API Routes', () => {
       
       const getResponse = await request.get('/api/monsters');
       expect(response.status).toBe(200);
-      expect(getResponse.body.find(monster => monster.id ===chimera.id)).toBeUndefined();
+      expect(getResponse.body.find(monster => monster.id === chimera.id)).toBeUndefined();
     });
 
     describe('seed data tests', () => {
