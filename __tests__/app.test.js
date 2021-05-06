@@ -63,6 +63,7 @@ describe('API Routes', () => {
     };
 
     it('POST aboleth to /api/monsters', async () => {
+      aboleth.userId = user.id;
       const response = await request
         .post('/api/monsters')
         .send(aboleth);
