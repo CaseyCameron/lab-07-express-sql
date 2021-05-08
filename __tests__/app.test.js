@@ -15,15 +15,15 @@ describe('API Routes', () => {
     let user;
 
     beforeAll(async () => {
-      execSync('npm run recreate-tables');
+      execSync('npm run recreate-tables'); //delete and recreate with empty tables
 
-      const response = await request
+      const response = await request  //create a user
         .post('/api/auth/signup')
         .send({
           name: 'Me the User',
           email: 'me@user.com',
           passwordHash: 'password'
-        });
+        }); //this is a repsonse to our request on app.js
 
       expect(response.status).toBe(200);
       user = response.body;
@@ -71,7 +71,7 @@ describe('API Routes', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual(aboleth);
 
-      aboleth = response.body;
+      aboleth = response.body; //now aboleth = the stuff in the db see line 52 in app.js
     });
 
     it('PUT updated aboleth into /api/monsters/:id', async () => {
@@ -109,13 +109,26 @@ describe('API Routes', () => {
       expect(response.body).toEqual(expect.arrayContaining(expected));
     });
     
+    it('GET A monster from /api/monsters using ?name=', async () => {
+      // chimera.userId = user.id;
+      // const r2 = await request.post('/api/monsters/').send(chimera);
+      // chimera = r2.body;
+      chimera.userName = 'Me the User';
+      const response = await request.get('/api/monsters?name=Chimera');
+      
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([chimera]);
+
+    });
+    
     it('GET chimera from /api/monsters/:id', async () => {
       const response = await request.get(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ ...chimera, userName: user.name });
     });
     
-    it.skip('DELETE chimera from /api/monsters', async () => {
+    it('DELETE chimera from /api/monsters', async () => {
+      delete chimera.userName;
       const response = await request.delete(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);

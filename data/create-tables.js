@@ -28,7 +28,7 @@ async function run() {
         img_url VARCHAR(1024) NOT NULL,
         user_id INTEGER NOT NULL REFERENCES users(id)
       );
-    `);
+    `); //line 21 it creates a unique id for the monster row item
 
     console.log('create tables complete');
   }
