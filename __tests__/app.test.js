@@ -109,13 +109,26 @@ describe('API Routes', () => {
       expect(response.body).toEqual(expect.arrayContaining(expected));
     });
     
+    it('GET A monster from /api/monsters using ?name=', async () => {
+      // chimera.userId = user.id;
+      // const r2 = await request.post('/api/monsters/').send(chimera);
+      // chimera = r2.body;
+      chimera.userName = 'Me the User';
+      const response = await request.get('/api/monsters?name=Chimera');
+      
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([chimera]);
+
+    });
+    
     it('GET chimera from /api/monsters/:id', async () => {
       const response = await request.get(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ ...chimera, userName: user.name });
     });
     
-    it.skip('DELETE chimera from /api/monsters', async () => {
+    it('DELETE chimera from /api/monsters', async () => {
+      delete chimera.userName;
       const response = await request.delete(`/api/monsters/${chimera.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(chimera);
