@@ -15,15 +15,15 @@ describe('API Routes', () => {
     let user;
 
     beforeAll(async () => {
-      execSync('npm run recreate-tables');
+      execSync('npm run recreate-tables'); //delete and recreate with empty tables
 
-      const response = await request
+      const response = await request  //create a user
         .post('/api/auth/signup')
         .send({
           name: 'Me the User',
           email: 'me@user.com',
           passwordHash: 'password'
-        });
+        }); //this is a repsonse to our request on app.js
 
       expect(response.status).toBe(200);
       user = response.body;
@@ -71,7 +71,7 @@ describe('API Routes', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual(aboleth);
 
-      aboleth = response.body;
+      aboleth = response.body; //now aboleth = the stuff in the db see line 52 in app.js
     });
 
     it('PUT updated aboleth into /api/monsters/:id', async () => {
